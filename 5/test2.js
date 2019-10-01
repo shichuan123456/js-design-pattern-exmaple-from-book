@@ -1,3 +1,4 @@
+// 定义策略
 var strategies = {
   isNonEmpty: function (value, errorMsg) { // 不为空
     if (value === '') {
@@ -17,6 +18,7 @@ var strategies = {
   }
 };
 
+// 定义验证类
 var Validator = function () {
   this.cache = []; // 保存校验规则
 };
@@ -36,7 +38,7 @@ Validator.prototype.add = function (dom, rules) {
     })(rule)
   }
 };
-
+// 校验执行
 Validator.prototype.start = function () {
   for (var i = 0, validatorFunc; validatorFunc = this.cache[i++];) {
     var errorMsg = validatorFunc();
@@ -45,10 +47,11 @@ Validator.prototype.start = function () {
     }
   }
 };
-
+// 用户使用
 var registerForm = document.getElementById('registerForm');
 var validataFunc = function () {
   var validator = new Validator();
+  // 添加规则，可对同一dom添加多个校验规则
   validator.add(registerForm.userName, [{
     strategy: 'isNonEmpty',
     errorMsg: '用户名不能为空'
