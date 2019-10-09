@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+</head>
+
+<body>
+
+  <button id="button1">点击按钮1</button>
+  <button id="button2">点击按钮2</button>
+  <button id="button3">点击按钮3</button>
+
+  <script type="text/javascript">
+    var setCommand = function (button, func) {
+      button.onclick = function () {
+        func();
+      }
+    };
+
+    var MenuBar = {
+      refresh: function () {
+        console.log('刷新菜单界面');
+      }
+    };
+    var RefreshMenuBarCommand = function (receiver) {
+      return function () {
+        receiver.refresh();
+      }
+    };
+    var refreshMenuBarCommand = RefreshMenuBarCommand(MenuBar);
+    setCommand(button1, refreshMenuBarCommand);
+
+    // 创建命令
+    var RefreshMenuBarCommand = function (receiver) {
+      return {
+        execute: function () {
+          receiver.refresh();
+        }
+      }
+    };
+    // 设置命令
+    var setCommand = function (button, command) {
+      button.onclick = function () {
+        command.execute();
+      }
+    };
+    var refreshMenuBarCommand = RefreshMenuBarCommand(MenuBar);
+    setCommand(button1, refreshMenuBarCommand);
+
+  </script>
+
+</body>
+
+</html>
